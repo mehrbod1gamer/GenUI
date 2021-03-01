@@ -2,7 +2,7 @@
 
 namespace mehrbod1gamer\GenUI;
 
-use mehrbod1gamer\Lib\SimpleForm;
+use mehrbod1gamer\GenUI\SimpleForm;
 use pocketmine\block\Block;
 use pocketmine\block\Cobblestone;
 use pocketmine\command\Command;
