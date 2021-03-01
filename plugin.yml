@@ -1,0 +1,11 @@
+name: GenUI
+api: 3.0.0
+version: 1.0.0
+author: mehrbod1gamer
+main: mehrbod1gamer\GenUI\main
+depend: [SkyBlock]
+
+commands:
+ gen:
+  description: UPgrade your Skyblock generator
+
