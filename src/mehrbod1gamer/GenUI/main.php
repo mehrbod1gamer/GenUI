@@ -14,6 +14,7 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
+use room17\SkyBlock\SkyBlock;
 use room17\SkyBlock\event\island\IslandCreateEvent;
 use room17\SkyBlock\event\island\IslandDisbandEvent;
 
@@ -46,7 +47,7 @@ class main extends PluginBase implements  Listener
 
     public function onEnable()
     {
-        $this->skyblock = $this->getServer()->getPluginManager()->getPlugin("SkyBlock");
+        $this->skyblock = SkyBlock::getInstance();
         $this->saveDefaultConfig();
         $this->reloadConfig();
         self::$levelsDB = new Config($this->getDataFolder() . "levels.json", Config::JSON);
