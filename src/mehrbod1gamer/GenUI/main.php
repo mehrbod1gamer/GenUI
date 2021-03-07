@@ -98,6 +98,11 @@ class main extends PluginBase implements  Listener
         });
         if( (!is_null($session)) and ($session->hasIsland()) )
         {
+            $levelName = $session->getIsland()->getLevel()->getName();
+            if (!isset(self::$levelsDB->getAll()[$levelName])) {
+                self::$levelsDB->set($levelName, 1);
+            }
+            
             $form->setTitle(TextFormat::AQUA . "GenUI");
             $price = $this->getConfig()->get($this->getGenlevel($player) + 1);
             if ($this->getGenlevel($player) != 7) {
