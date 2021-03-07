@@ -101,6 +101,7 @@ class main extends PluginBase implements  Listener
             $levelName = $session->getIsland()->getLevel()->getName();
             if (!isset(self::$levelsDB->getAll()[$levelName])) {
                 self::$levelsDB->set($levelName, 1);
+                self::$levelsDB->save();
             }
             
             $form->setTitle(TextFormat::AQUA . "GenUI");
