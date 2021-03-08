@@ -3,7 +3,7 @@
 namespace mehrbod1gamer\GenUI;
 
 use mehrbod1gamer\GenUI\SimpleForm;
-use mehrbod1ganer\GenUI\event\EventListener;
+use mehrbod1gamer\GenUI\event\EventListener;
 use pocketmine\block\Block;
 use pocketmine\block\Cobblestone;
 use pocketmine\command\Command;
