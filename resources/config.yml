@@ -76,4 +76,4 @@ upgrade-msg: "§eUpgrade Cost: §a{cost}$ {line}§aYour Generator is LeveL §e{l
 #generator level -> {level}
 #generator next level -> {nextLevel}
 #upgrade cost -> {cost}
-not-enough-money-msg: "§cYour Money is lower than §e{price}$"
+not-enough-money-msg: "§cYour Money is lower than §e{cost}$"
