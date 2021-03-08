@@ -3,6 +3,7 @@
 namespace mehrbod1gamer\GenUI;
 
 use mehrbod1gamer\GenUI\SimpleForm;
+use mehrbod1ganer\GenUI\event\EventListener;
 use pocketmine\block\Block;
 use pocketmine\block\Cobblestone;
 use pocketmine\command\Command;
@@ -51,7 +52,7 @@ class main extends PluginBase implements  Listener
         $this->saveDefaultConfig();
         $this->reloadConfig();
         self::$levelsDB = new Config($this->getDataFolder() . "levels.json", Config::JSON);
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         parent::onEnable();
     }
 
@@ -137,43 +138,10 @@ class main extends PluginBase implements  Listener
         }
     }
 
-    public function onCreateIs(IslandCreateEvent $event)
-    {
-        $island = $event->getIsland();
-        $levelName = $island->getLevel()->getName();
-        self::$levelsDB->set($levelName, 1);
-        self::$levelsDB->save();
-    }
-
-    public function onDisbandIs(IslandDisbandEvent $event)
-    {
-        $island = $event->getIsland();
-        $levelName = $island->getLevel()->getName();
-        self::$levelsDB->remove($levelName);
-        self::$levelsDB->save();
-    }
-
     public function getGenlevel(Player $player) : int
     {
         $session   = $this->skyblock->getSessionManager()->getSession($player);
         $levelName = $session->getIsland()->getLevel()->getName();
         return self::$levelsDB->get($levelName);
-    }
-
-    public function onCobblestoneForm(BlockFormEvent $event): void
-    {
-        self::$levelsDB = new Config($this->getDataFolder() . "levels.json", Config::JSON);
-        $block = $event->getBlock();
-        $levelName = $block->getLevel()->getName();
-        if (!$event->getNewState() instanceof Cobblestone) return;
-        if (isset(self::$levelsDB->getAll()[$levelName])) {
-            $level = self::$levelsDB->get($levelName);
-            $max = $level - 1;
-            $blockID = self::$levels[mt_rand(0, $max)];
-            $choice = Block::get($blockID);
-            $event->setCancelled();
-            $block->getLevel()->setBlock($block, $choice, true, true);
-            $block->getLevel()->addSound(new FizzSound($block->add(0.5, 0.5, 0.5), 2.6 + (lcg_value() - lcg_value()) * 0.8));
-        }
     }
 }
