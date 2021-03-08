@@ -24,25 +24,8 @@ class main extends PluginBase implements  Listener
     public static $levelsDB;
     public $skyblock;
 
-    public static $features = [
-        1 => '  §c* §aFeatures : §emine §8coal §ewith generator',
-        2 => '  §c* §aFeatures : §emine §7iron §ewith generator',
-        3 => '  §c* §aFeatures : §emine §6gold §ewith generator',
-        4 => '  §c* §aFeatures : §emine §9lapis §ewith generator',
-        5 => '  §c* §aFeatures : §emine §4redstone §ewith generator',
-        6 => '  §c* §aFeatures : §emine §aemerald §ewith generator',
-        7 => '  §c* Your generator is MAX level',
-    ];
-
-    public static $pics = [
-        1 => "textures/blocks/coal_ore",
-        2 => "textures/blocks/iron_ore",
-        3 => "textures/blocks/gold_ore",
-        4 => "textures/blocks/lapis_ore",
-        5 => "textures/blocks/redstone_ore",
-        6 => "textures/blocks/emerald_ore",
-        7 => "textures/gui/newgui/X",
-    ];
+    public static $features = [];
+    public static $pics = [];
 
     public static $levels = [Block::COBBLESTONE, Block::COAL_ORE, Block::IRON_ORE, Block::GOLD_ORE, Block::LAPIS_ORE, Block::REDSTONE_ORE, Block::EMERALD_ORE];
 
@@ -51,9 +34,28 @@ class main extends PluginBase implements  Listener
         $this->skyblock = SkyBlock::getInstance();
         $this->saveDefaultConfig();
         $this->reloadConfig();
+        
+        for($i = 0; $i <= 7; $i++)
+        {
+            $level = $i + 1;
+            self::$features[$level] = $this->getConfig()->get("f$level");
+            self::$pics[$level] = $this->getConfig()->get("p$level");
+        }
+        
         self::$levelsDB = new Config($this->getDataFolder() . "levels.json", Config::JSON);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         parent::onEnable();
+    }
+    
+     public function onLoad()
+    {
+        for($i = 0; $i <= 7; $i++)
+        {
+            $level = $i + 1;
+            self::$features[$level] = $this->getConfig()->get("f$level");
+            self::$pics[$level] = $this->getConfig()->get("p$level");
+        }
+        parent::onLoad();
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool
@@ -97,6 +99,7 @@ class main extends PluginBase implements  Listener
                    break;
            }
         });
+        $form->setTitle( $this->getConfig()->get('title') );
         if( (!is_null($session)) and ($session->hasIsland()) )
         {
             $levelName = $session->getIsland()->getLevel()->getName();
@@ -105,19 +108,30 @@ class main extends PluginBase implements  Listener
                 self::$levelsDB->save();
             }
             
-            $form->setTitle(TextFormat::AQUA . "GenUI");
-            $price = $this->getConfig()->get($this->getGenlevel($player) + 1);
+            $feature = str_replace( "{line}", "\n", self::$features[$this->getGenlevel($player)] );
+            $cost    = $this->getConfig()->get($this->getGenlevel($player) + 1);
+            $price   = str_replace( ["{line}", "{price}"], ["\n", $cost], $this->getConfig()->get('price-format') );
+            
             if ($this->getGenlevel($player) != 7) {
-                $form->setContent(TextFormat::YELLOW . "Your Genlevel : " . $this->getGenlevel($player) . "\n\n\n" . self::$features[$this->getGenlevel($player)] . "\n" . "  §c* §aPrice : §e$price$");
-                $form->addButton(TextFormat::GREEN . "Upgrade Gen To " . TextFormat::DARK_RED . $nextlevel, 0, self::$pics[$this->getGenlevel($player)]);
+                
+                $content = str_replace(["{line}", "{level}", "{name}"], ["\n", $this->getGenlevel($player), $player->getName()], $this->getConfig()->get('have-is-content') );
+                
+                $form->setContent($content . $feature . $price);
+                
+                $button = str_replace(["{line}", "{level}", "{name}", "{nextLevel}"], ["\n", $this->getGenlevel($player), $player->getName(), $this->getGenlevel($player) + 1], $this->getConfig()->get('have-is-button') );
+                
+                $form->addButton($button, 0, self::$pics[$this->getGenlevel($player)]);
             } else {
-                $form->setContent(TextFormat::YELLOW . "Your Genlevel : " . $this->getGenlevel($player) . "\n\n\n" . self::$features[$this->getGenlevel($player)]);
-                $form->addButton(TextFormat::RED . "close form");
+                $content = str_replace(["{line}", "{level}", "{name}"], ["\n", $this->getGenlevel($player), $player->getName()], $this->getConfig()->get('max-level-gen-content'));
+                
+                $form->setContent( $content . $feature);
+                $form->addButton( $this->getConfig()->get('max-level-gen-button') );
             }
         } else {
-            $form->setTitle(TextFormat::AQUA . "GenUI");
-            $form->setContent(TextFormat::RED . "* You dont have IsLand");
-            $form->addButton(TextFormat::RED . "Close Form");
+            $content = str_replace(["{line}", "{name}"], ["\n", $player->getName()], $this->getConfig()->get('have-no-is-content'));
+            
+            $form->setContent($content);
+            $form->addButton( $this->getConfig()->get('have-no-is-button') );
         }
         $form->sendToPlayer($player);
         return $form;
