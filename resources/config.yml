@@ -5,3 +5,60 @@
 5: 50000
 6: 100000
 7: 250000
+
+#genertaor feature for each level
+#break line -> {line}
+f1: '  §c* §aFeatures : §emine §8coal §ewith generator{line}'
+f2: '  §c* §aFeatures : §emine §7iron §ewith generator{line}'
+f3: '  §c* §aFeatures : §emine §6gold §ewith generator{line}'
+f4: '  §c* §aFeatures : §emine §9lapis §ewith generator{line}'
+f5: '  §c* §aFeatures : §emine §4redstone §ewith generator{line}'
+f6: '  §c* §aFeatures : §emine §aemerald §ewith generator{line}'
+f7: '  §c* Your generator is MAX level{line}'
+
+#generator button image for each level
+p1: "textures/blocks/coal_ore"
+p2: "textures/blocks/iron_ore"
+p3: "textures/blocks/gold_ore"
+p4: "textures/blocks/lapis_ore"
+p5: "textures/blocks/redstone_ore"
+p6: "textures/blocks/emerald_ore"
+p7: "textures/gui/newgui/X"
+
+#genertaor upgrade price Format
+#upgrade price -> {price}
+#break line -> {line}
+price-format: '  §c* §aPrice : §e{price}$'
+
+#form menu title
+title: "§aGenUI"
+
+#form menu button if player have island
+#player name -> {name}
+#break line -> {line}
+#player generator level -> {level}
+#player generator next level -> {nextLevel}
+have-is-button: "§aUpgrade Gen To §4{nextLevel}"
+
+#form menu button if player dont have island
+have-no-is-button: "§cClose Form"
+
+#form menu button if generator is max level
+max-level-gen-button: "§cClose form"
+
+#form menu content if player have island
+#player name -> {name}
+#break line -> {line}
+#player generator level -> {level}
+have-is-content: "§eYour Genlevel : {level} {line}{line}{line}"
+
+#form menu content if generator is max level
+#player name -> {name}
+#break line -> {line}
+#player generator level -> {level}
+max-level-gen-content: "§eYour Genlevel : {level} {line}{line}{line}"
+
+#form menu content if player dont have island
+#player name -> {name}
+#break line -> {line}
+have-no-is-content: "§c* You dont have IsLand"
