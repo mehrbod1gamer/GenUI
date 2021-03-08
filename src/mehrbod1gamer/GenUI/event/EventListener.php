@@ -1,6 +1,6 @@
 <?php
 
-namespace mehrbod1ganer\GenUI\event;
+namespace mehrbod1gamer\GenUI\event;
 
 use mehrbod1gamer\GenUI\main;
 use pocketmine\block\Block;
