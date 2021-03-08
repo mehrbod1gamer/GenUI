@@ -86,11 +86,14 @@ class main extends PluginBase implements  Listener
                case 0:
                    if ((!is_null($session)) and ($session->hasIsland())) {
                        if ($this->getGenlevel($player) != 7) {
-                           if ($this->takeUpgradeMoney($player)) {
+                           $nxtlevel = $this->getGenlevel($player) + 1;
+                           $price  = $this->getConfig()->get($nxtlevel);
+                           if ($this->takeUpgradeMoney($player, $price)) {
                                $levelName = $session->getIsland()->getLevel()->getName();
                                self::$levelsDB->set($levelName, $nextlevel);
                                self::$levelsDB->save();
-                               $player->sendMessage(TextFormat::GREEN . "Your Generator is LeveL " . $this->getGenlevel($player) . " Now");
+                               $msg = str_replace(["{name}", "{line}", "{level}", "{cost}"], [$player->getName(), "\n", $this->getGenlevel($player), $price], $this->getConfig()->get('upgrade-msg'));
+                               $player->sendMessage( $msg );
                            } else return false;
                        } else return false;
                    } else {
@@ -137,17 +140,16 @@ class main extends PluginBase implements  Listener
         return $form;
     }
 
-    public function takeUpgradeMoney(Player $player) : bool
+    public function takeUpgradeMoney(Player $player, $price) : bool
     {
-        $nxtlevel = $this->getGenlevel($player) + 1;
-        $price  = $this->getConfig()->get($nxtlevel);
         $api = $this->getServer()->getPluginManager()->getPlugin('EconomyAPI');
         if ($api->myMoney($player) >= $price)
         {
             $api->reduceMoney($player, $price);
             return true;
         } else {
-            $player->sendMessage(TextFormat::RED . "Your Money is not enough");
+            $msg = str_replace(["{name}", "{line}", "{level}", "{price}", "{nextLevel}"], [$player->getName(), "\n", $this->getGenlevel($player), $price, $this->getGenlevel($player) + 1], $this->getConfig()->get('not-enough-money-msg'));
+            $player->sendMessage($msg);
             return false;
         }
     }
