@@ -62,3 +62,18 @@ max-level-gen-content: "§eYour Genlevel : {level} {line}{line}{line}"
 #player name -> {name}
 #break line -> {line}
 have-no-is-content: "§c* You dont have IsLand"
+
+#upgrade message
+#player name -> {name}
+#break line -> {line}
+#generator level -> {level}
+#upgrade cost -> {cost}
+upgrade-msg: "§eUpgrade Cost: §a{cost}$ {line}§aYour Generator is LeveL §e{level} §aNow"
+
+#not enaugh money to upgrade generator message
+#player name -> {name}
+#break line -> {line}
+#generator level -> {level}
+#generator next level -> {nextLevel}
+#upgrade cost -> {cost}
+not-enough-money-msg: "§cYour Money is lower than §e{price}$"
