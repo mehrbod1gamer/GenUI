@@ -148,7 +148,7 @@ class main extends PluginBase implements  Listener
             $api->reduceMoney($player, $price);
             return true;
         } else {
-            $msg = str_replace(["{name}", "{line}", "{level}", "{price}", "{nextLevel}"], [$player->getName(), "\n", $this->getGenlevel($player), $price, $this->getGenlevel($player) + 1], $this->getConfig()->get('not-enough-money-msg'));
+            $msg = str_replace(["{name}", "{line}", "{level}", "{cost}", "{nextLevel}"], [$player->getName(), "\n", $this->getGenlevel($player), $price, $this->getGenlevel($player) + 1], $this->getConfig()->get('not-enough-money-msg'));
             $player->sendMessage($msg);
             return false;
         }
