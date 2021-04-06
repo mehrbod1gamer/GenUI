@@ -13,8 +13,9 @@ f2: '  §c* §aFeatures : §emine §7iron §ewith generator{line}'
 f3: '  §c* §aFeatures : §emine §6gold §ewith generator{line}'
 f4: '  §c* §aFeatures : §emine §9lapis §ewith generator{line}'
 f5: '  §c* §aFeatures : §emine §4redstone §ewith generator{line}'
-f6: '  §c* §aFeatures : §emine §aemerald §ewith generator{line}'
-f7: '  §c* Your generator is MAX level{line}'
+f6: '  §c* §aFeatures : §emine §bdiamond §ewith generator{line}'
+f7: '  §c* §aFeatures : §emine §aemerald §ewith generator{line}'
+f8: '  §c* Your generator is MAX level{line}'
 
 #generator button image for each level
 p1: "textures/blocks/coal_ore"
@@ -22,8 +23,9 @@ p2: "textures/blocks/iron_ore"
 p3: "textures/blocks/gold_ore"
 p4: "textures/blocks/lapis_ore"
 p5: "textures/blocks/redstone_ore"
-p6: "textures/blocks/emerald_ore"
-p7: "textures/gui/newgui/X"
+p6: "textures/blocks/diamond_ore"
+p7: "textures/blocks/emerald_ore"
+p8: "textures/gui/newgui/X"
 
 #genertaor upgrade price Format
 #upgrade price -> {price}
