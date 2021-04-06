@@ -27,7 +27,7 @@ class main extends PluginBase implements  Listener
     public static $features = [];
     public static $pics = [];
 
-    public static $levels = [Block::COBBLESTONE, Block::COAL_ORE, Block::IRON_ORE, Block::GOLD_ORE, Block::LAPIS_ORE, Block::REDSTONE_ORE, Block::EMERALD_ORE];
+    public static $levels = [Block::COBBLESTONE, Block::COAL_ORE, Block::IRON_ORE, Block::GOLD_ORE, Block::LAPIS_ORE, Block::REDSTONE_ORE, Block::DIAMOND_ORE, Block::EMERALD_ORE];
 
     public function onEnable()
     {
@@ -35,7 +35,7 @@ class main extends PluginBase implements  Listener
         $this->saveDefaultConfig();
         $this->reloadConfig();
         
-        for($i = 0; $i <= 7; $i++)
+        for($i = 0; $i <= 8; $i++)
         {
             $level = $i + 1;
             self::$features[$level] = $this->getConfig()->get("f$level");
@@ -49,7 +49,7 @@ class main extends PluginBase implements  Listener
     
      public function onLoad()
     {
-        for($i = 0; $i <= 7; $i++)
+        for($i = 0; $i <= 8; $i++)
         {
             $level = $i + 1;
             self::$features[$level] = $this->getConfig()->get("f$level");
@@ -85,7 +85,7 @@ class main extends PluginBase implements  Listener
            switch ($data) {
                case 0:
                    if ((!is_null($session)) and ($session->hasIsland())) {
-                       if ($this->getGenlevel($player) != 7) {
+                       if ($this->getGenlevel($player) != 8) {
                            $nxtlevel = $this->getGenlevel($player) + 1;
                            $price  = $this->getConfig()->get($nxtlevel);
                            if ($this->takeUpgradeMoney($player, $price)) {
@@ -115,7 +115,7 @@ class main extends PluginBase implements  Listener
             $cost    = $this->getConfig()->get($this->getGenlevel($player) + 1);
             $price   = str_replace( ["{line}", "{price}"], ["\n", $cost], $this->getConfig()->get('price-format') );
             
-            if ($this->getGenlevel($player) != 7) {
+            if ($this->getGenlevel($player) != 8) {
                 
                 $content = str_replace(["{line}", "{level}", "{name}"], ["\n", $this->getGenlevel($player), $player->getName()], $this->getConfig()->get('have-is-content') );
                 
